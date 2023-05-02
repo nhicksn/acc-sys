@@ -4,6 +4,8 @@
 
 #include <string>
 
+void help();
+
 class database {
 private:
 

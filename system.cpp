@@ -8,6 +8,15 @@
 
 using namespace std;
 
+// outputs message on how to use
+void help() {
+    cout << "\nThere are 4 command options:\n"
+    << "'register' creates a new account, and stores it in the database\n"
+    << "'delete' removes an existing account from the database\n"
+    << "'help' prints this message\n"
+    << "and 'quit' exits the program\n";
+}
+
 database::database(const string& filenameIn) : filename(filenameIn) { }
 
 // returns true if a new user was created, false if username already exists

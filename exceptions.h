@@ -12,12 +12,9 @@ private:
 public:
     systemException(const std::string& filenameIn) : filename(filenameIn) { }
 
-    std::string fileError() {
-        return ("Error opening file " + filename); 
+    virtual const char* what() const throw() {
+        return "database file could not be opened\n";
     }
 };  
-
-
-
 
 #endif
