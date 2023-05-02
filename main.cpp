@@ -9,5 +9,7 @@
 using namespace std;
 
 int main() {
-    
+    database data("database.txt");
+
+    return 0;
 }

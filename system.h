@@ -3,22 +3,24 @@
 #define SYSTEM_H
 
 #include <string>
-#include <unordered_map>
-
-using userIter = unordered_map<string, string>::iterator;
 
 class database {
 private:
 
-    std::unordered_map<std::string, std::string> users; // maps usernames to passwords
+    std::string filename;
+
+    // returns true if the username was found in the database, false otherwise
+    bool findUser(const std::string& username);
 
 public:
 
-    userIter registerUser(std::string& username, std::string& password);
+    database(const std::string& filenameIn);
 
-    userIter findUser(std::string& username);
+    // returns true if a new user was created, false if username already exists
+    bool registerUser(const std::string& username, const std::string& password);
 
-    bool checkPassword(userIter& user, std::string& pass);
+    // returns true if a user was deleted, false if user does not exist or password is wrong
+    bool deleteUser(const std::string& username, const std::string& password);
 };
 
-#endif SYSTEM_H
+#endif
