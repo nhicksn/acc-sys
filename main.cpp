@@ -54,6 +54,22 @@ int main() {
                 cout << e.what();
             }
         }
+        else if(command == "change") {
+            cout << "input username: ";
+            cin >> username;
+            try {
+                if(data.changePassword(username)) {
+                    cout << username << "'s password was successfully changed\n";
+                }
+                else {
+                    cout << "Action could not be completed: user " 
+                        << username << " is not in the database\n";
+                }
+            }
+            catch(exception &e) {
+                cout << e.what();
+            }
+        }
         else if(command == "help") {
             help();
         }

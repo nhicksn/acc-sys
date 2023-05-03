@@ -10,11 +10,30 @@ using namespace std;
 
 // outputs message on how to use
 void help() {
-    cout << "\nThere are 4 command options:\n"
+    cout << "\nThere are 5 command options:\n"
     << "'register' creates a new account, and stores it in the database\n"
     << "'delete' removes an existing account from the database\n"
+    << "'change' edits the password of an existing user\n"
     << "'help' prints this message\n"
     << "and 'quit' exits the program\n";
+}
+
+// returns true if the username was found in the database, false otherwise
+bool database::findUser(const string& username) {
+    
+    // open file
+    ifstream file(filename);
+    if(!file.is_open()) throw systemException(filename);
+
+    string user;
+
+    while(file >> user) {
+        if(user == username) return true;
+
+        file >> user; // get rid of password
+    }
+
+    return false;
 }
 
 database::database(const string& filenameIn) : filename(filenameIn) { }
@@ -72,20 +91,37 @@ bool database::deleteUser(const string& username, const string& password) {
 
 }
 
-// returns true if the username was found in the database, false otherwise
-bool database::findUser(const string& username) {
-    
-    // open file
+bool database::changePassword(const string& username) {
+    if(!findUser(username)) return false;
+
     ifstream file(filename);
-    if(!file.is_open()) throw systemException(filename);
 
-    string user;
+    vector<string> tempData;
+    string user, pass;
+    string password = "initial";
 
-    while(file >> user) {
-        if(user == username) return true;
-
-        file >> user; // get rid of password
+    while(file >> user >> pass) {
+        if(user == username) {
+            while(password != pass) {
+                cout << "input current password for " << username << '\n';
+                cin >> password;
+                if(password != pass) {
+                    cout << "incorrect: ";
+                }
+            }
+            cout << "input new password for " << username << '\n';
+            cin >> password;
+            tempData.push_back(username + ' ' + password + '\n');
+            continue;
+        }
+        tempData.push_back(user + ' ' + pass + '\n');
     }
 
-    return false;
+    ofstream fileOut(filename);
+
+    for(size_t i = 0; i < tempData.size(); i++) {
+        fileOut << tempData[i];
+    }
+
+    return true;
 }

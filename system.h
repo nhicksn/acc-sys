@@ -23,6 +23,9 @@ public:
 
     // returns true if a user was deleted, false if user does not exist or password is wrong
     bool deleteUser(const std::string& username, const std::string& password);
+
+    // returns true after password is changed, false if user does not exist
+    bool changePassword(const std::string& username);
 };
 
 #endif
