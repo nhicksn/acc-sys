@@ -96,6 +96,8 @@ bool database::changePassword(const string& username) {
 
     ifstream file(filename);
 
+    if(!file.is_open()) throw systemException(filename);
+
     vector<string> tempData;
     string user, pass;
     string password = "initial";
