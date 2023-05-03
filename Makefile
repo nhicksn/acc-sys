@@ -19,7 +19,7 @@ debug: $(FILES)
 
 clean:
 	-rm -f *.o
-	-rm -f acc-sys*
+	-rm -f $(EXEC_FILE)*
 .PHONY: clean
 
 # dependencies
